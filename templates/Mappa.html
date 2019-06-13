@@ -1,0 +1,47 @@
+<html><body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mappa</title>
+    <link rel="stylesheet" type="text/css" href="/static/Css/Css.css"/>
+</head>
+<h1 style="text-align:center;">Gira Napoli</h1>
+
+<nav>
+    <ul>
+        <li><a href="Mappa.html">Mappa</a></li>
+        <li><a href="#">Linee e posizione veicoli</a> </li>
+        <li><a href="#">Calcola un percorso</a> </li>
+        <li><a href="#">Fermate più vicine</a> </li>
+        <li><a href="#">Fermata da codice</a> </li>
+        <li><a href="Tutte.html">Tutte le fermate</a> </li>
+        <li><a href="#">Fermate preferite</a> </li>
+    </ul>
+</nav>
+
+
+<div id="DivMappa"></div>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+
+    // Definisco la variabilie mappa come un oggetto OpenLayers.Map utilizzando il DivMappa, poi aggiungo il Layer OSM (Open Street Map)
+    var Mappa = new OpenLayers.Map("DivMappa");
+    Mappa.addLayer(new OpenLayers.Layer.OSM());
+
+    // Creo l'oggetto contenente le coordinate (prima longitudine e poi latitudine)
+    LonLat = new OpenLayers.LonLat( 14.217673,  40.833316 )
+        .transform(
+            new OpenLayers.Projection("EPSG:4326"), // Transformazione da WGS 1984..
+            Mappa.getProjectionObject() // .. a Spherical Mercator Projection
+        );
+
+    var zoom=13;
+
+    // Creo una variabile contenete il layer dei marker poi collego il layer dei markers alla mappa
+    var LayerMarkers = new OpenLayers.Layer.Markers( "Markers" );
+    Mappa.addLayer(LayerMarkers);
+
+    // Imposto le coordinate di lonLat come centro della mappa di partenza
+    Mappa.setCenter (LonLat, zoom);
+</script>
+</body></html>
